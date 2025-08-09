@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+body {
+    background: #0077ff;
+    overflow: hidden;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body::before {
+    width: 80vh;
+    height: 80vh;
+    top: -20vh;
+    right: -20vh;
+}
+
+body::after {
+    width: 60vh;
+    height: 60vh;
+    bottom: -10vh;
+    left: -10vh;
+}
