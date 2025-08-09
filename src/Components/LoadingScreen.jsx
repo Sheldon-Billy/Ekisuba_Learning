@@ -1,36 +1,103 @@
-import { useState, useEffect } from "react";
-import TypingEffect from "./TypingEffect";
+import { useState, useEffect } from 'react';
+import TypingEffect from './TypingEffect';
 
 const LoadingScreen = ({ onComplete }) => {
-    const [typingComplete, setTypingComplete] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [messageIndex, setMessageIndex] = useState(0);
+    const [expanded, setExpanded] = useState(false);
+    const [messagesCompleted, setMessagesCompleted] = useState(0);
 
+    const messages = [
+        "Let's Speak Ekisuba",
+        "Tunywange Ekisuba"
+    ];
+
+    // Progress bar animation
     useEffect(() => {
-        if (typingComplete) {
-            const timeout = setTimeout(() => {
-                onComplete(); // Call the onComplete function to hide the loading screen
-            }, 2000); // 2-second delay
+        const interval = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 100) {
+                    clearInterval(interval);
+                    return 100;
+                }
+                return prev + (1 + Math.random() * 3);
+            });
+        }, 100);
 
-            return () => clearTimeout(timeout); // Cleanup
+        return () => clearInterval(interval);
+    }, []);
+
+    // Handle completion when both conditions are met
+    useEffect(() => {
+        if (progress >= 100 && messagesCompleted >= 2) {
+            const timeout = setTimeout(onComplete, 1000); // Additional 1s delay after both messages
+            return () => clearTimeout(timeout);
         }
-    }, [typingComplete, onComplete]);
+    }, [progress, messagesCompleted, onComplete]);
+
+    // Cycle through messages
+    const handleMessageComplete = () => {
+        setMessagesCompleted(prev => prev + 1);
+        setMessageIndex(prev => (prev + 1) % messages.length);
+        setExpanded(false);
+    };
 
     return (
-        // Container
+        <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 p-4">
+            {/* Glass-morphism container */}
+            <div className={`
+                relative
+                flex flex-col gap-6 items-center justify-center
+                p-8 rounded-2xl
+                bg-white/5 backdrop-blur-lg border border-[#a6a6a6]
+                transition-all duration-300
+                ${expanded ? 'w-full max-w-2xl' : 'w-full max-w-[700px]'}
+                shadow-xl
+            `}>
+                {/* Animated logo */}
+                <div className="relative">
+                    <div className="w-20 h-20 rounded-full bg-blue-500/20 border-2 border-blue-400 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-blue-500/30 border border-blue-300 animate-ping absolute"></div>
+                        <span className="text-3xl font-bold text-white animate-bounce">S</span>
+                    </div>
+                </div>
 
-        <div className="flex flex-col gap-4 items-center justify-center h-screen">
+                {/* Typing effect section */}
+                <div className="text-center w-full">
+                    <div className="text-2xl sm:text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-300 via-white to-blue-200 text-transparent bg-clip-text">
+                        <TypingEffect
+                            text={messages[messageIndex]}
+                            speed={80}
+                            onComplete={handleMessageComplete}
+                        />
+                    </div>
+                    <p className="text-blue-200/80 mt-3 text-sm">
+                        {progress < 30 ? "Initializing systems..." :
+                            progress < 70 ? "Loading components..." :
+                                "Finalizing experience..."}
+                    </p>
+                </div>
 
-            {/* loading text */}
-            <div className="sm:text-[20px] md:text-[30px] font-extrabold bg-gradient-to-r from-[#2a78e4] via-white to-[blue] text-transparent bg-clip-text">
-                <TypingEffect
-                    text="Hi, Happy to visit my portfolio..."
-                    onTypingComplete={() => setTypingComplete(true)} // Notify when typing is done
-                />
+                {/* Progress bar with shine effect */}
+                <div className="w-full max-w-md">
+                    <div className="h-2 w-full bg-blue-900/30 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-gradient-to-r from-blue-400 to-blue-200 rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${progress}%` }}
+                        >
+                            <div className="h-full w-8 bg-white/80 rounded-full animate-shine float-right"></div>
+                        </div>
+                    </div>
+                    <div className="flex justify-between text-xs text-blue-200 mt-2">
+                        <span>{Math.min(progress, 100).toFixed(0)}%</span>
+                        <span className="font-medium">Almost ready...</span>
+                    </div>
+                </div>
 
-                <span className="animate-blink text-blue-500 ">|</span>
-            </div>
-            {/* progress bar */}
-            <div className="w-[350px] h-[2px] bg-gray-800 rounded-2xl overflow-hidden">
-                <div className="bg-blue-500 shadow-[0_0_15px_blue] h-full w-[30%] animate-loading-bar "></div>
+                {/* Subtle footer */}
+                <div className="absolute bottom-4 text-blue-300/50 text-xs">
+                    Crafted with ❤️ for Suba
+                </div>
             </div>
         </div>
     );

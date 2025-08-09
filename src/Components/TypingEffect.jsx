@@ -1,38 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-const TypingEffect = ({
-  text,
-  delay = 60,
-  infinite = false,
-  onTypingComplete,
-}) => {
-  const [currentText, setCurrentText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+const TypingEffect = ({ text, speed = 80, onComplete }) => {
+    const [displayText, setDisplayText] = useState('');
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [isPausing, setIsPausing] = useState(false);
 
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setCurrentText((prevText) => prevText + text[currentIndex]);
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-      }, delay);
+    useEffect(() => {
+        let timeout;
 
-      return () => clearTimeout(timeout);
-    } else {
-      // Typing is complete
-      if (onTypingComplete) {
-        onTypingComplete(); // Call the callback
-      }
-      if (infinite) {
-        const timeout = setTimeout(() => {
-          setCurrentText("");
-          setCurrentIndex(0);
-        }, 1000);
+        if (isPausing) {
+            // Pause before backspacing (500ms pause)
+            timeout = setTimeout(() => {
+                setIsPausing(false);
+                setIsDeleting(true);
+            }, 1000);
+        }
+        else if (!isDeleting) {
+            // Typing forward
+            if (displayText.length < text.length) {
+                timeout = setTimeout(() => {
+                    setDisplayText(text.slice(0, displayText.length + 1));
+                }, speed);
+            } else {
+                setIsPausing(true); // Set pause before deleting
+            }
+        } else {
+            // Deleting
+            if (displayText.length > 0) {
+                timeout = setTimeout(() => {
+                    setDisplayText(displayText.slice(0, -1));
+                }, speed / 2); // Backspace faster
+            } else {
+                setIsDeleting(false);
+                if (onComplete) onComplete(); // Cycle to next message
+            }
+        }
+
         return () => clearTimeout(timeout);
-      }
-    }
-  }, [currentIndex, delay, infinite, text, onTypingComplete]);
+    }, [displayText, isDeleting, isPausing, text, speed, onComplete]);
 
-  return <span>{currentText}</span>;
+    return (
+        <>
+            {displayText}
+            <span className={`animate-pulse text-blue-300 ${isPausing ? 'opacity-100' : 'opacity-100'}`}>|</span>
+        </>
+    );
 };
 
 export default TypingEffect;
