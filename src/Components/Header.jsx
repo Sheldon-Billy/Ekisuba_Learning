@@ -1,4 +1,5 @@
 import { FaLanguage } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
     return (
@@ -9,7 +10,9 @@ const Header = () => {
                     <h1 className="text-2xl font-bold">Suba Language Learning</h1>
                 </div>
                 <nav className="flex space-x-4">
-                    <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">Home</button>
+                    <NavLink to="/">  <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">Home</button></NavLink>
+                    <NavLink to="/chat">  <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">AI Chatbot</button></NavLink>
+                    <NavLink to="/testing">  <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">Testing</button></NavLink>
                     <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">Courses</button>
                     <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">About</button>
                     <button className="bg-white text-blue-800 px-4 py-2 rounded-md font-medium hover:bg-blue-100 transition">

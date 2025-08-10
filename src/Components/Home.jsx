@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { FaPlay, FaUserGraduate, FaRobot, FaVolumeUp, FaBook, FaLanguage, FaHeadphones, FaComments, FaChartLine } from 'react-icons/fa';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [playingAudio, setPlayingAudio] = useState(null);
-    const [chatMessage, setChatMessage] = useState('');
-    const [chatHistory, setChatHistory] = useState([
-        { sender: 'ai', text: 'Amachi! Nyinge ndi AI tutor. Ongoye ndi? (Hello! I am AI tutor. What is your name?)' }
-    ]);
+    const navigate = useNavigate();
 
     // Sample data
     const courseLevels = [
@@ -16,9 +14,9 @@ const Home = () => {
     ];
 
     const sampleWords = [
-        { id: 1, suba: "Amachi", english: "Hello", phonetic: "ah-mah-chee", audio: "hello.mp3" },
-        { id: 2, suba: "Erokamano", english: "Thank you", phonetic: "eh-roh-kah-mah-no", audio: "thanks.mp3" },
-        { id: 3, suba: "Orio", english: "Goodbye", phonetic: "oh-ree-oh", audio: "goodbye.mp3" },
+        { id: 1, suba: "igake/egake", english: "Hello", phonetic: "i-gaa-keh", audio: "hello.mp3" },
+        { id: 2, suba: "Igaao", english: "Thank you", phonetic: "i-ga-aa-o", audio: "thanks.mp3" },
+        { id: 3, suba: "Kurinde", english: "Goodbye", phonetic: "khu-ri-nde", audio: "goodbye.mp3" },
     ];
 
     const features = [
@@ -36,21 +34,8 @@ const Home = () => {
         setTimeout(() => setPlayingAudio(null), 2000);
     };
 
-    const handleSendMessage = () => {
-        if (chatMessage.trim()) {
-            const newUserMessage = { sender: 'user', text: chatMessage };
-            const aiResponse = {
-                sender: 'ai',
-                text: 'Erokamano! Nyinge ndi AI. Ombwate kwogendanisa? (Thank you! I am AI. Would you like to continue?)'
-            };
-
-            setChatHistory([...chatHistory, newUserMessage, aiResponse]);
-            setChatMessage('');
-        }
-    };
-
     return (
-        <div className=" bg-gradient-to-b from-blue-50 to-white">
+        <div className="bg-gradient-to-b from-blue-50 to-white">
             {/* Hero Section */}
             <section className="bg-blue-900 text-white py-20">
                 <div className="container mx-auto text-center px-4">
@@ -62,11 +47,16 @@ const Home = () => {
 
                     {/* ekisuba ai button */}
                     <div className="flex items-center justify-center m-3">
-                        <button className="relative bg-gradient-to-r from-blue-300 via-blue-800 to-blue-200 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 ease-out shadow-md hover:shadow-lg flex items-center group hover:cursor-pointer">
-                            <FaRobot className="mr-3 text-white size-6 group-hover:text-white group-hover:animate-bounce transition-colors duration-200" />
-                            <span>Chat with Ekisuba AI</span>
-                            <span className="absolute -inset-1 rounded-lg bg-blue-400 opacity-0 group-hover:opacity-20 group-hover:animate-pulse transition-opacity duration-300 pointer-events-none"></span>
-                        </button>
+                        <NavLink to="/chat">
+                            <button
+
+                                className="relative bg-gradient-to-r border border-white from-blue-300 via-blue-800 to-blue-200 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 ease-out shadow-md hover:shadow-lg flex items-center group hover:cursor-pointer"
+                            >
+                                <FaRobot className="mr-3 text-white size-6 group-hover:text-white group-hover:animate-bounce transition-colors duration-200" />
+                                <span>Chat with Ekisuba AI</span>
+                                <span className="absolute -inset-1 rounded-lg bg-blue-400 opacity-0 group-hover:opacity-20 group-hover:animate-pulse transition-opacity duration-300 pointer-events-none"></span>
+                            </button>
+                        </NavLink>
                     </div>
 
                     <div className="flex justify-center gap-6">
@@ -140,48 +130,26 @@ const Home = () => {
                             </div>
                         </div>
 
-                        {/* AI Chat Demo */}
+                        {/* Video Demo Section */}
                         <div className="bg-white p-6 rounded-xl shadow-sm">
                             <h3 className="text-2xl font-bold text-blue-800 mb-6 flex items-center">
-                                <FaRobot className="mr-3" /> AI Conversation Practice
+                                <FaPlay className="mr-3" /> Ekisuba AI Demo
                             </h3>
 
-                            <div className="bg-blue-50 rounded-lg p-4 h-80 mb-4 overflow-y-auto">
-                                {chatHistory.map((msg, index) => (
-                                    <div
-                                        key={index}
-                                        className={`mb-3 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}
-                                    >
-                                        <div
-                                            className={`inline-block px-4 py-2 rounded-lg max-w-xs md:max-w-md ${msg.sender === 'user' ?
-                                                'bg-blue-600 text-white' :
-                                                'bg-gray-200 text-gray-800'}`}
-                                        >
-                                            {msg.text}
-                                        </div>
-                                    </div>
-                                ))}
+                            <div className="aspect-w-16 aspect-h-9 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+                                {/* Replace this div with your actual video component */}
+                                <div className="text-white text-center p-4">
+                                    <p className="text-lg mb-4">Video demonstration of Ekisuba AI in action</p>
+                                    <p className="text-sm text-gray-300">(Replace with actual video component)</p>
+                                </div>
                             </div>
 
-                            <div className="flex">
-                                <input
-                                    type="text"
-                                    value={chatMessage}
-                                    onChange={(e) => setChatMessage(e.target.value)}
-                                    placeholder="Type your message in Suba..."
-                                    className="flex-1 border border-blue-300 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                                />
-                                <button
-                                    onClick={handleSendMessage}
-                                    className="bg-blue-700 text-white px-6 py-3 rounded-r-lg hover:bg-blue-800 transition flex items-center"
-                                >
-                                    Send
-                                </button>
-                            </div>
-
-                            <div className="mt-4 text-sm text-gray-600">
-                                <p>Try saying: "Amachi" (Hello) or "Orio" (Goodbye)</p>
+                            <div className="mt-4 bg-blue-100 p-4 rounded-lg">
+                                <h4 className="font-bold text-blue-800 mb-2">How It Works</h4>
+                                <p className="text-gray-700">
+                                    Watch our AI tutor engage in natural Suba conversations, providing real-time feedback
+                                    and culturally appropriate responses to help you learn effectively.
+                                </p>
                             </div>
                         </div>
                     </div>
