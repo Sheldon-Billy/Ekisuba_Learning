@@ -50,7 +50,7 @@ const Home = () => {
                         <NavLink to="/chat">
                             <button
 
-                                className="relative bg-gradient-to-r border border-white from-blue-300 via-blue-800 to-blue-200 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 ease-out shadow-md hover:shadow-lg flex items-center group hover:cursor-pointer"
+                                className="relative bg-gradient-to-r border border-white from-blue-300 via-blue-800 to-blue-400 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 ease-out shadow-md hover:shadow-lg flex items-center group hover:cursor-pointer"
                             >
                                 <FaRobot className="mr-3 text-white size-6 group-hover:text-white group-hover:animate-bounce transition-colors duration-200" />
                                 <span>Chat with Ekisuba AI</span>

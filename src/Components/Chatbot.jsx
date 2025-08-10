@@ -12,6 +12,21 @@ const Chatbot = () => {
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
 
+    useEffect(() => {
+        if (messagesContainerRef.current) {
+            // Only scroll if we're near the bottom (within 100px) or if it's a new message from the AI
+            const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
+            const isNearBottom = scrollHeight - (scrollTop + clientHeight) < 100;
+
+            if (isNearBottom || chatHistory[chatHistory.length - 1]?.sender === 'ai') {
+                messagesContainerRef.current.scrollTo({
+                    top: messagesContainerRef.current.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }, [chatHistory]);
+
     const handleSendMessage = () => {
         if (chatMessage.trim()) {
             const newUserMessage = { sender: 'user', text: chatMessage };
@@ -39,10 +54,10 @@ const Chatbot = () => {
     ];
 
     return (
-        <div className="flex ">
+        <div className="flex h-[80vh]"> {/* Changed from h-screen to h-[80vh] */}
 
             {/* Left Sidebar */}
-            <div className="w-100 bg-gradient-to-br from-blue-900 to to-blue-600 flex flex-col">
+            <div className="w-64 bg-gradient-to-br from-blue-900 to to-blue-600 flex flex-col">
                 {/* New Chat Button */}
                 <button className="flex items-center justify-center space-x-2 m-4 p-3 bg-gradient-to-r from-blue-300 via-blue-500 to to-blue-300 text-white rounded-lg hover:from-blue-500  hover:via-blue-300 hover:to-blue-500 border border-white transition hover:cursor-pointer">
                     <FaPlus className="text-sm" />
@@ -96,9 +111,9 @@ const Chatbot = () => {
             </div>
 
             {/* Main Chat Area */}
-            <div className="w-screen flex flex-col">
+            <div className="flex-1 flex flex-col">
                 {/* Chat Header */}
-                <div className="bg-gradient-to-r from-blue-800 via-blue-200 to-blue-800 border-b border-gray-200 p-4 flex relative">
+                <div className="bg-gradient-to-r from-blue-800 via-blue-200 to-blue-800 border-b border-gray-200 p-4 flex items-center justify-between">
                     <button
                         onClick={() => navigate('/')}
                         className="flex items-center text-white hover:text-[#b6ff77] transition hover:underline"
@@ -106,20 +121,20 @@ const Chatbot = () => {
                         <FaArrowLeft className="mr-2" />
                         <span>Back to Home</span>
                     </button>
-                    <div className="flex absolute left-100">
-                        <FaRobot className="text-white size-10 mr-2" />
-                        <h2 className="text-[25px] font-bold mt-2">Ekisuba AI Tutor</h2>
+                    <div className="flex items-center">
+                        <FaRobot className="text-white text-2xl mr-2" />
+                        <h2 className="text-xl font-bold">Ekisuba AI Tutor</h2>
                     </div>
-                    <div className="w-6"></div>
+                    <div className="w-6"></div> {/* Spacer for balance */}
                 </div>
 
                 {/* Messages Container */}
                 <div
                     ref={messagesContainerRef}
-                    className="h-110 p-4 bg-white"
+                    className="flex-1 overflow-y-auto p-4 bg-gray-100"
                     style={{ scrollBehavior: 'smooth' }}
                 >
-                    <div className="min-w-4xl mx-auto space-y-4">
+                    <div className="max-w-3xl mx-auto space-y-4">
                         {chatHistory.map((msg, index) => (
                             <div
                                 key={index}
@@ -166,7 +181,7 @@ const Chatbot = () => {
                 </div>
 
                 {/* Input Area */}
-                <div className="bg-white  border-gray-300 p-4">
+                <div className="bg-white border-t border-gray-300 p-4">
                     <div className="max-w-3xl mx-auto">
                         <div className="relative flex items-center">
                             <input
