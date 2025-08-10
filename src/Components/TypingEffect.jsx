@@ -13,7 +13,7 @@ const TypingEffect = ({ text, speed = 80, onComplete }) => {
             timeout = setTimeout(() => {
                 setIsPausing(false);
                 setIsDeleting(true);
-            }, 1000);
+            }, 1200);
         }
         else if (!isDeleting) {
             // Typing forward

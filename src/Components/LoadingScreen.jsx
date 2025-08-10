@@ -9,7 +9,7 @@ const LoadingScreen = ({ onComplete }) => {
 
     const messages = [
         "Let's Speak Ekisuba",
-        "Tunywange Ekisuba"
+        "Thugambe Ekisuba"
     ];
 
     // Progress bar animation
@@ -64,14 +64,14 @@ const LoadingScreen = ({ onComplete }) => {
 
                 {/* Typing effect section */}
                 <div className="text-center w-full">
-                    <div className="text-2xl sm:text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-300 via-white to-blue-200 text-transparent bg-clip-text">
+                    <div className="text-2xl sm:text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-[#ffffff] to-[#00ff00] text-transparent bg-clip-text ">
                         <TypingEffect
                             text={messages[messageIndex]}
                             speed={80}
                             onComplete={handleMessageComplete}
                         />
                     </div>
-                    <p className="text-blue-200/80 mt-3 text-sm">
+                    <p className="text-white mt-10 text-sm ">
                         {progress < 30 ? "Initializing systems..." :
                             progress < 70 ? "Loading components..." :
                                 "Finalizing experience..."}
@@ -85,7 +85,7 @@ const LoadingScreen = ({ onComplete }) => {
                             className="h-full bg-gradient-to-r from-blue-400 to-blue-200 rounded-full transition-all duration-300 ease-out"
                             style={{ width: `${progress}%` }}
                         >
-                            <div className="h-full w-8 bg-white/80 rounded-full animate-shine float-right"></div>
+
                         </div>
                     </div>
                     <div className="flex justify-between text-xs text-blue-200 mt-2">
@@ -94,10 +94,12 @@ const LoadingScreen = ({ onComplete }) => {
                     </div>
                 </div>
 
-                {/* Subtle footer */}
-                <div className="absolute bottom-4 text-blue-300/50 text-xs">
-                    Crafted with ❤️ for Suba
-                </div>
+
+            </div>
+
+            {/* Subtle footer */}
+            <div className="absolute bottom-4 text-blue-300 text-xs">
+                Crafted with ❤️ for Suba
             </div>
         </div>
     );

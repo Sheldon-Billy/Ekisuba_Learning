@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaPlay, FaUserGraduate, FaRobot, FaVolumeUp, FaBook, FaLanguage, FaHeadphones, FaComments, FaChartLine } from 'react-icons/fa';
 
 const Home = () => {
-    const [activeTab, setActiveTab] = useState('overview');
     const [playingAudio, setPlayingAudio] = useState(null);
     const [chatMessage, setChatMessage] = useState('');
     const [chatHistory, setChatHistory] = useState([
@@ -52,24 +51,6 @@ const Home = () => {
 
     return (
         <div className=" bg-gradient-to-b from-blue-50 to-white">
-            {/* Header */}
-            <header className="bg-blue-800 text-white p-4 shadow-lg">
-                <div className="container mx-auto flex justify-between items-center">
-                    <div className="flex items-center space-x-2">
-                        <FaLanguage className="text-2xl" />
-                        <h1 className="text-2xl font-bold">Suba Language Learning</h1>
-                    </div>
-                    <nav className="flex space-x-4">
-                        <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">Home</button>
-                        <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">Courses</button>
-                        <button className="px-4 py-2 hover:bg-blue-700 rounded-md transition">About</button>
-                        <button className="bg-white text-blue-800 px-4 py-2 rounded-md font-medium hover:bg-blue-100 transition">
-                            Sign In
-                        </button>
-                    </nav>
-                </div>
-            </header>
-
             {/* Hero Section */}
             <section className="bg-blue-900 text-white py-20">
                 <div className="container mx-auto text-center px-4">
@@ -78,11 +59,21 @@ const Home = () => {
                         An interactive platform combining AI technology with authentic Suba language recordings
                         to teach pronunciation, grammar, and conversation skills.
                     </p>
+
+                    {/* ekisuba ai button */}
+                    <div className="flex items-center justify-center m-3">
+                        <button className="relative bg-gradient-to-r from-blue-300 via-blue-800 to-blue-200 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 ease-out shadow-md hover:shadow-lg flex items-center group hover:cursor-pointer">
+                            <FaRobot className="mr-3 text-white size-6 group-hover:text-white group-hover:animate-bounce transition-colors duration-200" />
+                            <span>Chat with Ekisuba AI</span>
+                            <span className="absolute -inset-1 rounded-lg bg-blue-400 opacity-0 group-hover:opacity-20 group-hover:animate-pulse transition-opacity duration-300 pointer-events-none"></span>
+                        </button>
+                    </div>
+
                     <div className="flex justify-center gap-6">
-                        <button className="bg-white text-blue-900 px-8 py-3 rounded-md font-bold hover:bg-blue-100 transition flex items-center">
+                        <button className="bg-white text-blue-900 px-8 py-3 rounded-md font-bold transition flex items-center hover:cursor-pointer hover:scale-110">
                             <FaUserGraduate className="mr-2" /> Start Learning
                         </button>
-                        <button className="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-blue-800 transition flex items-center">
+                        <button className="border-2 border-white text-white px-8 py-3 rounded-md font-bold hover:bg-blue-800 transition flex items-center hover:cursor-pointer hover:scale-110">
                             <FaPlay className="mr-2" /> Watch Demo
                         </button>
                     </div>
@@ -231,49 +222,6 @@ const Home = () => {
                     </button>
                 </div>
             </section>
-
-            {/* Footer */}
-            <footer className="bg-blue-900 text-white py-12">
-                <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-4 gap-8 mb-8">
-                        <div>
-                            <h3 className="text-xl font-bold mb-4 flex items-center">
-                                <FaLanguage className="mr-2" /> Suba Learning
-                            </h3>
-                            <p className="text-blue-200">
-                                Dedicated to preserving and teaching the Suba language through innovative technology.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">Learn</h4>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Courses</a></li>
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Vocabulary</a></li>
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Grammar</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">About</h4>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Our Mission</a></li>
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">The Suba Language</a></li>
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Team</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold mb-4">Connect</h4>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Contact Us</a></li>
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Community</a></li>
-                                <li><a href="#" className="text-blue-200 hover:text-white transition">Donate</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="border-t border-blue-800 pt-8 text-center text-blue-300">
-                        <p>© {new Date().getFullYear()} Suba Language Learning Platform. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 };

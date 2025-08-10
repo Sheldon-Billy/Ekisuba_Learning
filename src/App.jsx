@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./index.css";
 import LoadingScreen from "./Components/LoadingScreen";
 import Home from "./Components/Home";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(true);
@@ -25,8 +27,11 @@ function App() {
 
       <div className={`min-h-screen transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
         {isLoaded && (
-
-          <Home />
+          <>
+            <Header />
+            <Home />
+            <Footer />
+          </>
         )
         }
       </div>
